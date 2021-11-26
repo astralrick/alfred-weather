@@ -60,12 +60,12 @@ var ccDescriptions = map[string]string{
 	"freezing_rain_heavy": "Heavy freezing rain",
 }
 
-const ccAPI = "https://api.climacell.co/v3/weather"
+const ccAPI = "https://api.Tomorrow.io/v4/weather"
 
 const ccUnits = "si"
 
-// ClimaCell is a weather service handle
-type ClimaCell struct {
+// TomorrowIO is a weather service handle
+type TomorrowIO struct {
 	apiKey string
 }
 
@@ -117,13 +117,13 @@ type ccHourly struct {
 	WeatherCode       ccStringValue `json:"weather_code"`
 }
 
-// NewClimaCell returns a new ClimaCell handle
-func NewClimaCell(apiKey string) ClimaCell {
-	return ClimaCell{apiKey: apiKey}
+// NewTomorrowIO returns a new TomorrowIO handle
+func NewCTomorrowIO(apiKey string) TomorrowIO {
+	return TomorrowIO{apiKey: apiKey}
 }
 
 // Forecast returns the forecast for a given location
-func (f *ClimaCell) Forecast(l Location) (weather Weather, err error) {
+func (f *TomorrowIO) Forecast(l Location) (weather Weather, err error) {
 	dlog.Printf("getting forecast for %#v", l)
 
 	hourly, err := f.HourlyForecast(l)
@@ -189,7 +189,7 @@ func (f *ClimaCell) Forecast(l Location) (weather Weather, err error) {
 	return
 }
 
-func (f *ClimaCell) DailyForecast(l Location) (data []ccDaily, err error) {
+func (f *TomorrowIO) DailyForecast(l Location) (data []ccDaily, err error) {
 	dlog.Printf("getting daily forecast for %#v", l)
 
 	query := url.Values{}
@@ -223,7 +223,7 @@ func (f *ClimaCell) DailyForecast(l Location) (data []ccDaily, err error) {
 	return
 }
 
-func (f *ClimaCell) HourlyForecast(l Location) (data []ccHourly, err error) {
+func (f *TomorrowIO) HourlyForecast(l Location) (data []ccHourly, err error) {
 	dlog.Printf("getting hourly forecast for %#v", l)
 
 	query := url.Values{}
@@ -254,7 +254,7 @@ func (f *ClimaCell) HourlyForecast(l Location) (data []ccHourly, err error) {
 	return
 }
 
-func (f *ClimaCell) CurrentConditions(l Location) (data ccCurrent, err error) {
+func (f *TomorrowIO) CurrentConditions(l Location) (data ccCurrent, err error) {
 	dlog.Printf("getting current conditions for %#v", l)
 
 	query := url.Values{}
